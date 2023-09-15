@@ -1,8 +1,12 @@
 package com.fastcampus.fcboard.controller
 
-import com.fastcampus.fcboard.controller.dto.*
+import com.fastcampus.fcboard.controller.dto.PostCreateRequest
+import com.fastcampus.fcboard.controller.dto.PostDetailResponse
+import com.fastcampus.fcboard.controller.dto.PostSearchRequest
+import com.fastcampus.fcboard.controller.dto.PostSummaryResponse
+import com.fastcampus.fcboard.controller.dto.PostUpdateRequest
+import com.fastcampus.fcboard.controller.dto.toDto
 import com.fastcampus.fcboard.service.PostService
-
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,7 +23,7 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping("/posts")
 class PostController(
-    private val postService: PostService
+    private val postService: PostService,
 ) {
 
     @GetMapping

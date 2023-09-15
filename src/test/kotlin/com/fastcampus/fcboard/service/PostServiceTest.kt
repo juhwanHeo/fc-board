@@ -22,14 +22,16 @@ class PostServiceTest(
 ) : BehaviorSpec({
     given("게시글 생성시") {
         When("정상적인 input") {
-            val postId = postService.createPost(PostCreateRequestDto(
-                title = "제목",
-                content = "내용",
-                createdBy = "juhwan"
-            ))
+            val postId = postService.createPost(
+                PostCreateRequestDto(
+                    title = "제목",
+                    content = "내용",
+                    createdBy = "juhwan"
+                )
+            )
 
             then("게시글이 정상적으로 생성됨을 확인한다.") {
-                postId shouldBeGreaterThan  0L
+                postId shouldBeGreaterThan 0L
                 val post = postRepository.findByIdOrNull(postId)
                 post shouldNotBe null
 
@@ -95,5 +97,3 @@ class PostServiceTest(
         }
     }
 })
-
-
