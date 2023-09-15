@@ -5,7 +5,6 @@ import com.fastcampus.fcboard.controller.dto.PostDetailResponse
 import com.fastcampus.fcboard.controller.dto.PostSearchRequest
 import com.fastcampus.fcboard.controller.dto.PostSummaryResponse
 import com.fastcampus.fcboard.controller.dto.PostUpdateRequest
-
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
