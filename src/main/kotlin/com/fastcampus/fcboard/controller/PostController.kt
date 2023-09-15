@@ -1,10 +1,7 @@
 package com.fastcampus.fcboard.controller
 
-import com.fastcampus.fcboard.controller.dto.PostCreateRequest
-import com.fastcampus.fcboard.controller.dto.PostDetailResponse
-import com.fastcampus.fcboard.controller.dto.PostSearchRequest
-import com.fastcampus.fcboard.controller.dto.PostSummaryResponse
-import com.fastcampus.fcboard.controller.dto.PostUpdateRequest
+import com.fastcampus.fcboard.controller.dto.*
+import com.fastcampus.fcboard.service.PostService
 
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -21,7 +18,9 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/posts")
-class PostController {
+class PostController(
+    private val postService: PostService
+) {
 
     @GetMapping
     fun findAllPost(
@@ -42,7 +41,7 @@ class PostController {
     fun createPost(
         @RequestBody postCreateRequest: PostCreateRequest,
     ): Long {
-        return 1L
+        return postService.createPost(postCreateRequest.toDto())
     }
 
     @PutMapping("/{id}")
@@ -50,7 +49,7 @@ class PostController {
         @PathVariable id: Long,
         @RequestBody postUpdateRequest: PostUpdateRequest,
     ): Long {
-        return id
+        return postService.updatePost(id, postUpdateRequest.toDto())
     }
 
     @DeleteMapping("/{id}")
@@ -58,6 +57,6 @@ class PostController {
         @PathVariable id: Long,
         @RequestParam createdBy: String,
     ): Long {
-        return 1L
+        return postService.deletePost(id, createdBy)
     }
 }
