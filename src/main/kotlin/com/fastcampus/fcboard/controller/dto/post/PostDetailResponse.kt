@@ -1,6 +1,7 @@
 package com.fastcampus.fcboard.controller.dto.post
 
 import com.fastcampus.fcboard.controller.dto.comment.CommentResponse
+import com.fastcampus.fcboard.controller.dto.comment.toResponse
 import com.fastcampus.fcboard.service.dto.PostDetailResponseDto
 
 data class PostDetailResponse(
@@ -17,5 +18,6 @@ fun PostDetailResponseDto.toResponse() = PostDetailResponse(
     title = title,
     content = content,
     createdBy = createdBy,
-    createdAt = createdAt
+    createdAt = createdAt,
+    comments = comments.map { it.toResponse() }
 )
