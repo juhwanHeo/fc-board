@@ -1,11 +1,12 @@
 ### 게시글 생성
-POST /localhost:8080/posts
+POST localhost:8080/posts
 Content-Type: application/json
 
 {
     "title": "title",
     "content": "content",
-    "createBy": "createBy"
+    "createdBy": "createBy",
+    "tags": ["tag1", "tag2"]
 }
 
 ### 게시글 수정
@@ -15,7 +16,8 @@ Content-Type: application/json
 {
     "title": "title",
     "content": "content",
-    "updateBy": "updateBy"
+    "updatedBy": "string",
+    "tags": ["tag1", "tag2"]
 }
 
 ### 게시글 삭제
@@ -27,5 +29,5 @@ GET /localhost:8080/posts/1
 
 
 ### 게시글 목록
-GET /localhost:8080/posts?page=0&size=10&title=title&createdBy=harris
+GET /localhost:8080/posts?page=0&size=10&tag=kotlin
 
