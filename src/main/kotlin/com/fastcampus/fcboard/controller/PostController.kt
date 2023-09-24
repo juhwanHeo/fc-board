@@ -31,7 +31,6 @@ class PostController(
         pageable: Pageable,
         postSearchRequest: PostSearchRequest,
     ): Page<PostSummaryResponse> {
-        println("tag: ${postSearchRequest.tag}")
         return postService.findPageBy(pageable, postSearchRequest.toDto()).toResponse()
     }
 
