@@ -1,12 +1,12 @@
 package com.fastcampus.fcboard.controller
 
-import com.fastcampus.fcboard.controller.dto.PostCreateRequest
-import com.fastcampus.fcboard.controller.dto.PostDetailResponse
-import com.fastcampus.fcboard.controller.dto.PostSearchRequest
-import com.fastcampus.fcboard.controller.dto.PostSummaryResponse
-import com.fastcampus.fcboard.controller.dto.PostUpdateRequest
-import com.fastcampus.fcboard.controller.dto.toDto
-import com.fastcampus.fcboard.controller.dto.toResponse
+import com.fastcampus.fcboard.controller.dto.post.PostCreateRequest
+import com.fastcampus.fcboard.controller.dto.post.PostDetailResponse
+import com.fastcampus.fcboard.controller.dto.post.PostSearchRequest
+import com.fastcampus.fcboard.controller.dto.post.PostSummaryResponse
+import com.fastcampus.fcboard.controller.dto.post.PostUpdateRequest
+import com.fastcampus.fcboard.controller.dto.post.toDto
+import com.fastcampus.fcboard.controller.dto.post.toResponse
 import com.fastcampus.fcboard.service.PostService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

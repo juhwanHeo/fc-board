@@ -1,4 +1,4 @@
-package com.fastcampus.fcboard.controller.dto
+package com.fastcampus.fcboard.controller.dto.post
 
 import com.fastcampus.fcboard.service.dto.PostSummaryResponseDto
 import org.springframework.data.domain.Page
