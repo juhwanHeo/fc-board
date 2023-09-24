@@ -7,6 +7,7 @@ import com.fastcampus.fcboard.exception.PostNotFoundException
 import com.fastcampus.fcboard.exception.PostNotUpdatableException
 import com.fastcampus.fcboard.repository.CommentRepository
 import com.fastcampus.fcboard.repository.PostRepository
+import com.fastcampus.fcboard.repository.TagRepository
 import com.fastcampus.fcboard.service.dto.PostCreateRequestDto
 import com.fastcampus.fcboard.service.dto.PostSearchRequestDto
 import com.fastcampus.fcboard.service.dto.PostUpdateRequestDto
@@ -25,6 +26,7 @@ class PostServiceTest(
     private val postService: PostService,
     private val postRepository: PostRepository,
     private val commentRepository: CommentRepository,
+    private val tagRepository: TagRepository,
 ) : BehaviorSpec({
     beforeSpec {
         postRepository.saveAll(
@@ -62,16 +64,37 @@ class PostServiceTest(
                 post?.createdBy shouldBe "juhwan"
             }
         }
+
+        When("태그 추가 시") {
+            val postId = postService.createPost(
+                PostCreateRequestDto(
+                    title = "제목",
+                    content = "내용",
+                    createdBy = "juhwan",
+                    tags = listOf("tag1", "tag2")
+                )
+            )
+            then("태그가 정상적으로 추가됨을 확인") {
+                val tags = tagRepository.findByPostId(postId)
+                tags.size shouldBe 2
+                tags[0].name shouldBe "tag1"
+                tags[1].name shouldBe "tag2"
+            }
+        }
     }
     given("게시글 수정시") {
-        val saved = postRepository.save(Post(title = "title", content = "content", createdBy = "juhwan"))
-        val updatableDto = PostUpdateRequestDto(
-            title = "update title",
-            content = "update content",
-            updatedBy = "juhwan"
+        val saved = postRepository.save(
+            Post(title = "title", content = "content", createdBy = "juhwan", tags = listOf("tag1", "tag2"))
         )
         When("정상적인 수정") {
-            val updatedId = postService.updatePost(saved.id, updatableDto)
+            val updatedId = postService.updatePost(
+                saved.id,
+                PostUpdateRequestDto(
+                    title = "update title",
+                    content = "update content",
+                    updatedBy = "juhwan"
+                )
+            )
             then("게시글이 정상적으로 수정됨을 확인한다.") {
                 saved.id shouldBe updatedId
                 val updated = postRepository.findByIdOrNull(updatedId)
@@ -82,7 +105,14 @@ class PostServiceTest(
         When("게시글이 없을 때") {
             then("게시글을 찾을 수 없다는 예외가 발생") {
                 shouldThrow<PostNotFoundException> {
-                    postService.updatePost(9999L, updatableDto)
+                    postService.updatePost(
+                        9999L,
+                        PostUpdateRequestDto(
+                            title = "update title",
+                            content = "update content",
+                            updatedBy = "juhwan"
+                        )
+                    )
                 }
             }
         }
@@ -96,6 +126,40 @@ class PostServiceTest(
                 shouldThrow<PostNotUpdatableException> {
                     postService.updatePost(1L, notUpdatableDto)
                 }
+            }
+        }
+        When("태그가 수정되었을 때") {
+            then("정상적으로 수정됨을 확인") {
+
+                val updatedId = postService.updatePost(
+                    saved.id,
+                    PostUpdateRequestDto(
+                        title = "update title",
+                        content = "update content",
+                        updatedBy = "juhwan",
+                        tags = listOf("tag1", "tag2", "tag3")
+                    )
+                )
+                val tags = tagRepository.findByPostId(updatedId)
+                tags.size shouldBe 3
+                tags[2].name shouldBe "tag3"
+            }
+            then("태그 순서가 변경되었을때, 정상적으로 변경됨을 확인") {
+                val updatedId = postService.updatePost(
+                    saved.id,
+                    PostUpdateRequestDto(
+                        title = "update title",
+                        content = "update content",
+                        updatedBy = "juhwan",
+                        tags = listOf("tag3", "tag2", "tag1")
+                    )
+                )
+
+                val tags = tagRepository.findByPostId(updatedId)
+                tags.size shouldBe 3
+                tags[0].name shouldBe "tag3"
+                tags[1].name shouldBe "tag2"
+                tags[2].name shouldBe "tag1"
             }
         }
     }

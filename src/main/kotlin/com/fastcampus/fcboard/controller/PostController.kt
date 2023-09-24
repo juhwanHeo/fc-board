@@ -46,7 +46,6 @@ class PostController(
     fun createPost(
         @RequestBody postCreateRequest: PostCreateRequest,
     ): Long {
-        println("tags: ${postCreateRequest.tags}")
         return postService.createPost(postCreateRequest.toDto())
     }
 
@@ -55,7 +54,6 @@ class PostController(
         @PathVariable id: Long,
         @RequestBody postUpdateRequest: PostUpdateRequest,
     ): Long {
-        println("tags: ${postUpdateRequest.tags}")
         return postService.updatePost(id, postUpdateRequest.toDto())
     }
 
