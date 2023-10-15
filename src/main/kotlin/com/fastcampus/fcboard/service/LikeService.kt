@@ -21,4 +21,8 @@ class LikeService(
 
         return likeRepository.save(Like(post, createdBy)).id
     }
+
+    fun countLike(postId: Long): Long {
+        return likeRepository.countByPostId(postId)
+    }
 }
